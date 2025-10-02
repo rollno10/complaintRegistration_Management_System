@@ -9,10 +9,11 @@ import axios from 'axios';
 const AccordionAdmin = () => {
   const [complaintList, setComplaintList] = useState([]);
   const [agentList, setAgentList] = useState([]);
+  const API_URL = process.env.REACT_APP_API_URL;
   useEffect(() => {
     const getComplaints = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/complaints/status');
+        const response = await axios.get(`${API_URL}/complaints/status`);
         const complaints = response.data;
         setComplaintList(complaints);
       } catch (error) {
@@ -23,7 +24,7 @@ const AccordionAdmin = () => {
 
     const getAgentsRecords = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/admin/Agent');
+        const response = await axios.get(`${API_URL}/admin/Agent`);
         const agents = response.data;
         setAgentList(agents);
       } catch (error) {
@@ -36,7 +37,7 @@ const AccordionAdmin = () => {
 
   const handleSelection = async (agentId, complaintId, status, agentName) => {
     try {
-      await axios.get(`http://localhost:8080/admin/fetch/${agentId}`);
+      await axios.get(`${API_URL}/admin/fetch/${agentId}`);
       console.log(agentId);
       const assignedComplaint = {
         "agentId":agentId,
@@ -45,7 +46,7 @@ const AccordionAdmin = () => {
         "name":agentName
       };
 
-      await axios.post('http://localhost:8080/assigned', assignedComplaint);
+      await axios.post(`${API_URL}/assigned`, assignedComplaint);
       const updatedComplaintList = complaintList.filter((complaint) => complaint.id !== complaintId);
       setComplaintList(updatedComplaintList);
       alert(`Compliant assigned to the Agent ${agentName}`)

@@ -16,6 +16,7 @@ const AgentHome = () => {
       marginTop: '66px',
    }
 
+   const API_URL = process.env.REACT_APP_API_URL;
    const navigate = useNavigate();
    const [userName, setUserName] = useState('');
    const [agentId, setAgentId] = useState('');
@@ -31,7 +32,7 @@ const AgentHome = () => {
                const { userId, name } = user;
                setUserName(name);
                setAgentId(userId);
-               const response = await axios.get(`http://localhost:8080/assigned/${userId}`);
+               const response = await axios.get(`${API_URL}/assigned/${userId}`);
                const complaints = response.data;
                setAgentComplaintList(complaints);
             } else {
@@ -47,7 +48,7 @@ const AgentHome = () => {
 
    const handleStatusChange = async (complaintId) => {
       try {
-         await axios.put(`http://localhost:8080/complaints/${complaintId}`, { status: 'completed' });
+         await axios.put(`${API_URL}/complaints/${complaintId}`, { status: 'completed' });
          setAgentComplaintList((prevComplaints) =>
             prevComplaints.map((assigned) =>
                assigned.complaint.complaintId === complaintId ? { ...assigned, status: 'completed' } : assigned

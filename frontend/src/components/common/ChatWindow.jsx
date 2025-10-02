@@ -3,13 +3,14 @@ import axios from 'axios';
 
 
 const ChatWindow = (props) => {
+   const API_URL = process.env.REACT_APP_API_URL;
    const [messageInput, setMessageInput] = useState('');
    const messageWindowRef = useRef(null);
    const [messageList, setMessageList] = useState([]);
 
    const fetchMessageList = async () => {
       try {
-         const response = await axios.get(`http://localhost:8080/messages/${props.complaintId}`);
+         const response = await axios.get(`${API_URL}/messages/${props.complaintId}`);
          setMessageList(response.data);
       } catch (error) {
          console.error('Error fetching messages:', error);
@@ -33,7 +34,7 @@ const ChatWindow = (props) => {
             complaintId: props.complaintId
          }
          console.log(data);
-         const response = await axios.post('http://localhost:8080/messages', data)
+         const response = await axios.post(`${API_URL}/messages`, data)
          setMessageList([...messageList, response.data]);
          setMessageInput('');
          fetchMessageList();

@@ -10,6 +10,7 @@ import Footer from '../common/FooterC'
 import axios from 'axios';
 
 const AgentInfo = () => {
+   const API_URL = process.env.REACT_APP_API_URL;
    const navigate = useNavigate();
    const [ordinaryList, setOrdinaryList] = useState([]);
    const [toggle, setToggle] = useState({})
@@ -29,7 +30,7 @@ const AgentInfo = () => {
       }
       else {
          window.confirm("Are you sure you want to update the agent?");
-         axios.put(`http://localhost:8080/admin/update/${userId}`, updateAgent)
+         axios.put(`${API_URL}/admin/update/${userId}`, updateAgent)
             .then((res) => {
                alert(`Agent updated successfully`)
                JSON.stringify(res.data)
@@ -43,7 +44,7 @@ const AgentInfo = () => {
    useEffect(() => {
       const getOrdinaryRecords = async () => {
          try {
-            const response = await axios.get('http://localhost:8080/admin/Agent');
+            const response = await axios.get(`${API_URL}/admin/Agent`);
             const ordinary = response.data;
             setOrdinaryList(ordinary)
          } catch (error) {
@@ -57,7 +58,7 @@ const AgentInfo = () => {
       try {
          const confirmed = window.confirm("Are you sure you want to delete the user?");
          if (confirmed) {
-            await axios.delete(`http://localhost:8080/admin/delete/${userId}`);
+            await axios.delete(`${API_URL}/admin/delete/${userId}`);
             setOrdinaryList(ordinaryList.filter((user) => user._id !== userId));
          }
       } catch (error) {

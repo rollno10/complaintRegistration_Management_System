@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 
 const Complaint = () => {
+   const API_URL = process.env.REACT_APP_API_URL;
    const user = JSON.parse(localStorage.getItem('user'))
    const [userComplaint, setUserComplaint] = useState({
       userId: user._id,
@@ -34,7 +35,7 @@ const Complaint = () => {
       e.preventDefault()
       const user = JSON.parse(localStorage.getItem('user'))
       const _id = user.userId
-      axios.post(`http://localhost:8080/complaints/${_id}`, userComplaint)
+      axios.post(`${API_URL}/complaints/${_id}`, userComplaint)
          .then(res => {
             JSON.stringify(res.data.userComplaint)
             alert("Your Complaint has been send!!")

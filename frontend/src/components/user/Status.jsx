@@ -7,6 +7,7 @@ import ChatWindow from '../common/ChatWindow';
 import Collapse from 'react-bootstrap/Collapse';
 
 const Status = () => {
+  const API_URL = process.env.REACT_APP_API_URL;
   const [toggle, setToggle] = useState({})
   const [userId, setUserId] = useState("");
 
@@ -19,7 +20,7 @@ const Status = () => {
       if (user && user.userId) {
         const uId = user.userId;
         setUserId(uId);
-        const response = await axios.get(`http://localhost:8080/complaints/status/${uId}`);
+        const response = await axios.get(`${API_URL}/complaints/status/${uId}`);
         setStatusCompliants(response.data);
       }
     } catch (err) {

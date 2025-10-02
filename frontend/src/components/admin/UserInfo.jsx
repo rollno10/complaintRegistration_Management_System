@@ -11,6 +11,7 @@ import Footer from '../common/FooterC'
 import axios from 'axios';
 
 const UserInfo = () => {
+   const API_URL = process.env.REACT_APP_API_URL;
    const navigate = useNavigate();
    const [ordinaryList, setOrdinaryList] = useState([]);
    const [toggle, setToggle] = useState({})
@@ -33,7 +34,7 @@ const UserInfo = () => {
       }
       else {
          window.confirm("Are you sure you want to Update the user?");
-         axios.put(`http://localhost:8080/admin/update/${userId}`, updateUser)
+         axios.put(`${API_URL}/admin/update/${userId}`, updateUser)
             .then((res) => {
                alert(`user updated successfully`)
                JSON.stringify(res.data)
@@ -47,7 +48,7 @@ const UserInfo = () => {
    useEffect(() => {
       const getOrdinaryRecords = async () => {
          try {
-            const response = await axios.get('http://localhost:8080/admin/Ordinary');
+            const response = await axios.get(`${API_URL}/admin/Ordinary`);
             const ordinary = response.data;
             setOrdinaryList(ordinary)
          } catch (error) {
@@ -61,7 +62,7 @@ const UserInfo = () => {
       try {
          const confirmed = window.confirm("Are you sure you want to delete the user?");
          if (confirmed) {
-            await axios.delete(`http://localhost:8080/admin/delete/${userId}`);
+            await axios.delete(`${API_URL}/admin/delete/${userId}`);
             setOrdinaryList(ordinaryList.filter((user) => <user className="userId"></user> !== userId));
          }
       } catch (error) {

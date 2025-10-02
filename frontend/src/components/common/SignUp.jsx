@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Footer from './FooterC'
 const SignUp = () => {
+   const API_URL = process.env.REACT_APP_API_URL;
    const [title, setTitle] = useState("Select User")
    const [user, setUser] = useState({
       name: "",
@@ -26,7 +27,7 @@ const SignUp = () => {
    const handleSubmit = async (e) => {
       e.preventDefault()
       const updatedUser = { ...user, userRole: title };
-      axios.post("http://localhost:8080/users/signup", updatedUser)
+      axios.post(`${API_URL}/users/signup`, updatedUser)
          .then((res) => {
             alert("record submitted")
             JSON.stringify(res.data.user)

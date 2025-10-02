@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Footer from './FooterC'
 
 const Login = () => {
+   const API_URL = process.env.REACT_APP_API_URL;
    const navigate = useNavigate();
    const [user, setUser] = useState({
       email: "",
@@ -19,7 +20,7 @@ const Login = () => {
 
    const handleSubmit = async (e) => {
       e.preventDefault();
-      await axios.post("http://localhost:8080/users/login", user)
+      await axios.post(`${API_URL}/users/login", user`)
          .then((res) => {
             alert("Successfully logged in");
             localStorage.setItem("user", JSON.stringify(res.data));
